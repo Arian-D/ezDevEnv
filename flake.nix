@@ -18,10 +18,22 @@
             terraform-ls
           ];
           all-the-packages = [ hx ] ++ lsps;
+          env = pkgs.buildEnv {
+            name = "ezDevEnv";
+            paths = all-the-packages;
+            pathsToLink = [ "/bin" ];
+          };
       in
       {
         devShells.default = pkgs.mkShell {
           buildInputs = all-the-packages;
+        };
+        packages.dockerImage = pkgs.dockerTools.buildImage {
+          name = "ezDevEnv";
+          tag = "latest";
+          created = "now";
+          copyToRoot = env;
+          config.Cmd = [ "/bin/hx" ];
         };
       }
     );
