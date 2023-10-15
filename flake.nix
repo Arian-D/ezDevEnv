@@ -13,6 +13,7 @@
             marksman
             yaml-language-server
             gopls
+            nil
             rust-analyzer
             terraform-ls
           ];
