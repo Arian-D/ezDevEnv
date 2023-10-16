@@ -23,18 +23,19 @@
             paths = all-the-packages;
             pathsToLink = [ "/bin" ];
           };
+          dockerImage = pkgs.dockerTools.buildImage {
+            name = "ezDevEnv";
+            tag = "latest";
+            created = "now";
+            copyToRoot = env;
+          };
       in
       {
         devShells.default = pkgs.mkShell {
           buildInputs = all-the-packages;
         };
-        packages.dockerImage = pkgs.dockerTools.buildImage {
-          name = "ezDevEnv";
-          tag = "latest";
-          created = "now";
-          copyToRoot = env;
-          config.Cmd = [ "/bin/hx" ];
-        };
+        packages.environment = env;
+        packages.dockerImage = dockerImage;
       }
     );
 }
