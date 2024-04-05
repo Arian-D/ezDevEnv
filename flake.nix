@@ -3,7 +3,7 @@
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  inputs.helix.url = "github:helix-editor/helix/23.05";
+  inputs.helix.url = "github:helix-editor/helix/24.03";
 
   outputs = { self, nixpkgs, flake-utils, helix }: 
     flake-utils.lib.eachDefaultSystem (system:
