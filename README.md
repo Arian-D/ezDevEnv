@@ -11,8 +11,11 @@ you can run this to build and load the image
 podman load -i $(nix build .#dockerImage --print-out-paths)
 ```
 
-and set this alias to use it easily
+and then start using this:
 ```sh
-podman run --rm -it -v $PWD:/data ezdevenv:latest hx
+# To do a simple edit
+podman run --rm -it --network none -v $PWD:/data ezdevenv hx /data
+# To use the shell and developer utilities
+podman run --rm -it -v $PWD:/data ezdevenv bash
 ```
 
