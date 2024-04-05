@@ -12,8 +12,13 @@
           # hx = helix.packages.${system}.default;
           hx = pkgs.helix;
           dev-utils = with pkgs; [
+            openssl
+            pkg-config
+            coreutils
+            gcc
+            bash
+            git
             cargo
-
           ];
           lsps = with pkgs; [
             marksman
@@ -32,9 +37,21 @@
           };
           dockerImage = pkgs.dockerTools.buildImage {
             name = "ezDevEnv";
+            runAsRoot = ''
+                #!${pkgs.runtimeShell}
+                mkdir -p /tmp
+              '';
             tag = "latest";
             created = "now";
             copyToRoot = env;
+            config = {
+              Volumes = { "/tmp" = { }; "/root" = {}; };
+              Env = [
+                "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+                "HOME=/root"
+                "PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig"
+              ];
+            };
           };
       in
       {
