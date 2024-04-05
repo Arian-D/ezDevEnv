@@ -3,12 +3,14 @@
 
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  inputs.helix.url = "github:helix-editor/helix/24.03";
+  # inputs.helix.url = "github:helix-editor/helix/24.03";
 
   outputs = { self, nixpkgs, flake-utils, helix }: 
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-          hx = helix.packages.${system}.default;
+          # TODO: Switch to upstream Helix flake
+          # hx = helix.packages.${system}.default;
+          hx = pkgs.helix;
           lsps = with pkgs; [
             marksman
             yaml-language-server
