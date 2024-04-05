@@ -11,6 +11,10 @@
           # TODO: Switch to upstream Helix flake
           # hx = helix.packages.${system}.default;
           hx = pkgs.helix;
+          dev-utils = with pkgs; [
+            cargo
+
+          ];
           lsps = with pkgs; [
             marksman
             yaml-language-server
@@ -19,7 +23,8 @@
             rust-analyzer
             terraform-ls
           ];
-          all-the-packages = [ hx ] ++ lsps;
+          all-the-packages = [ hx ] ++ dev-utils ++ lsps;
+          # TODO: Set default CMD
           env = pkgs.buildEnv {
             name = "ezDevEnv";
             paths = all-the-packages;
