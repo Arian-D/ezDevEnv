@@ -53,20 +53,20 @@
           hx = pkgs.writeShellScriptBin "hx" ''
             ${hx-with-lsps}/bin/hx --config ${helix-config}
           '';
-          all-the-packages = [ hx ] ++ dev-utils;
           # TODO: Set default CMD
           # TODO: Set default WORKDIR
           env = pkgs.buildEnv {
-            name = "ezDevEnv";
-            paths = all-the-packages;
+            name = "ezdevenv";
+            paths = [ hx ];
             pathsToLink = [ "/bin" ];
           };
           dockerImage = pkgs.dockerTools.buildImage {
-            name = "ezDevEnv";
+            name = "ezdevenv";
             tag = "latest";
             created = "now";
             copyToRoot = env;
             config = {
+              Cmd = [ "/bin/hx" ];
               Volumes = {
                 "/tmp" = {};
                 "/root" = {};
@@ -82,9 +82,6 @@
           };
       in
       {
-        devShells.default = pkgs.mkShell {
-          buildInputs = all-the-packages;
-        };
         packages.default = hx;
         packages.environment = env;
         packages.dockerImage = dockerImage;
