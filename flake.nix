@@ -10,7 +10,6 @@
       let pkgs = nixpkgs.legacyPackages.${system};
           # TODO: Switch to upstream Helix flake
           # hx = helix.packages.${system}.default;
-          hx = pkgs.helix;
           dev-utils = with pkgs; [
             openssl
             pkg-config
@@ -28,7 +27,13 @@
             rust-analyzer
             terraform-ls
           ];
-          all-the-packages = [ hx ] ++ dev-utils ++ lsps;
+          hx = pkgs.helix.overrideAttrs (final: prev: {
+            postInstall = prev.postInstall + ''
+              wrapProgram $out/bin/hx \
+                --prefix PATH : ${pkgs.lib.makeBinPath lsps}
+            '';
+          });
+          all-the-packages = [ hx ] ++ dev-utils;
           # TODO: Set default CMD
           # TODO: Set default WORKDIR
           env = pkgs.buildEnv {
@@ -45,7 +50,6 @@
               Volumes = {
                 "/tmp" = {};
                 "/root" = {};
-                "/tmp" = {};
               };
               Env = [
                 "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
@@ -61,6 +65,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = all-the-packages;
         };
+        packages.default = hx;
         packages.environment = env;
         packages.dockerImage = dockerImage;
       }
