@@ -8,15 +8,6 @@
   outputs = { self, nixpkgs, flake-utils  }: 
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-          dev-utils = with pkgs; [
-            openssl
-            pkg-config
-            coreutils
-            gcc
-            bash
-            git
-            cargo
-          ];
           lsps = with pkgs; [
             marksman
             yaml-language-server
@@ -39,6 +30,7 @@
 
               [editor]
               line-number = "relative"
+              true-color = true
               mouse = true
 
               [editor.cursor-shape]
@@ -53,7 +45,6 @@
           hx = pkgs.writeShellScriptBin "hx" ''
             ${hx-with-lsps}/bin/hx --config ${helix-config}
           '';
-          # TODO: Set default CMD
           # TODO: Set default WORKDIR
           env = pkgs.buildEnv {
             name = "ezdevenv";
