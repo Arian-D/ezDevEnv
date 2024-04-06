@@ -5,11 +5,9 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   # inputs.helix.url = "github:helix-editor/helix/24.03";
 
-  outputs = { self, nixpkgs, flake-utils, helix }: 
+  outputs = { self, nixpkgs, flake-utils  }: 
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-          # TODO: Switch to upstream Helix flake
-          # hx = helix.packages.${system}.default;
           dev-utils = with pkgs; [
             openssl
             pkg-config
@@ -27,12 +25,34 @@
             rust-analyzer
             terraform-ls
           ];
-          hx = pkgs.helix.overrideAttrs (final: prev: {
+          # TODO: Switch to upstream Helix flake
+          hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
             postInstall = prev.postInstall + ''
-              wrapProgram $out/bin/hx \
-                --prefix PATH : ${pkgs.lib.makeBinPath lsps}
+              wrapProgram $out/bin/hx $wrapperfile \
+                --suffix PATH : ${pkgs.lib.makeBinPath lsps}
             '';
           });
+          helix-config = pkgs.writeTextFile {
+            name = "config.toml";
+            text = ''
+              theme = "catppuccin_macchiato"
+
+              [editor]
+              line-number = "relative"
+              mouse = true
+
+              [editor.cursor-shape]
+              insert = "bar"
+              normal = "block"
+              select = "underline"
+
+              [editor.file-picker]
+              hidden = false
+            '';
+          };
+          hx = pkgs.writeShellScriptBin "hx" ''
+            ${hx-with-lsps}/bin/hx --config ${helix-config}
+          '';
           all-the-packages = [ hx ] ++ dev-utils;
           # TODO: Set default CMD
           # TODO: Set default WORKDIR
