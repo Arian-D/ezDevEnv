@@ -30,6 +30,7 @@
           ];
           all-the-packages = [ hx ] ++ dev-utils ++ lsps;
           # TODO: Set default CMD
+          # TODO: Set default WORKDIR
           env = pkgs.buildEnv {
             name = "ezDevEnv";
             paths = all-the-packages;
@@ -37,19 +38,21 @@
           };
           dockerImage = pkgs.dockerTools.buildImage {
             name = "ezDevEnv";
-            runAsRoot = ''
-                #!${pkgs.runtimeShell}
-                mkdir -p /tmp
-              '';
             tag = "latest";
             created = "now";
             copyToRoot = env;
             config = {
-              Volumes = { "/tmp" = { }; "/root" = {}; };
+              Volumes = {
+                "/tmp" = {};
+                "/root" = {};
+                "/tmp" = {};
+              };
               Env = [
                 "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
                 "HOME=/root"
                 "PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig"
+                "TERM=xterm-256color"
+                "COLORTERM=true"
               ];
             };
           };
