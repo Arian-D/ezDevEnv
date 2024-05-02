@@ -43,7 +43,7 @@
             '';
           };
           hx = pkgs.writeShellScriptBin "hx" ''
-            ${hx-with-lsps}/bin/hx --config ${helix-config}
+            ${hx-with-lsps}/bin/hx --config ${helix-config} $@
           '';
           extraTools = with pkgs; [
             coreutils
