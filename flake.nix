@@ -9,12 +9,20 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
           lsps = with pkgs; [
+            # Markdown
             marksman
+            # YAML
             yaml-language-server
+            # Go
             gopls
+            # Nix
             nil
+            # Rust
             rust-analyzer
+            # Terraform HCL
             terraform-ls
+            # C
+            clang-tools
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
