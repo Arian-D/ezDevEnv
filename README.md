@@ -6,6 +6,7 @@ nix run github:Arian-D/ezDevEnv
 # Optionally
 export EDITOR="nix run github:Arian-D/ezDevEnv"
 ```
+
 ## (WIP) Docker/Podman Container
 If you have `nix` (configured with flakes), `podman`, and `git` on your path,
 you can run this to build and load the image
