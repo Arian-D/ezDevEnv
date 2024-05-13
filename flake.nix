@@ -44,6 +44,11 @@
               line-number = "relative"
               true-color = true
               mouse = true
+              popup-border = all
+
+              [editor.lsp]
+              display-messages = true
+              display-inlay-hints = true
 
               [editor.cursor-shape]
               insert = "bar"
@@ -52,6 +57,7 @@
 
               [editor.file-picker]
               hidden = false
+              
             '';
           };
           hx = pkgs.writeShellScriptBin "hx" ''
