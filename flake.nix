@@ -21,10 +21,12 @@
             rust-analyzer
             # Terraform HCL 
             terraform-ls
-            # C 
+            # C 
             clang-tools
             # Web 
             vscode-langservers-extracted
+            # Lua 
+            lua-language-server
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
