@@ -44,7 +44,7 @@
               line-number = "relative"
               true-color = true
               mouse = true
-              popup-border = all
+              popup-border = "all"
 
               [editor.lsp]
               display-messages = true
