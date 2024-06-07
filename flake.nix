@@ -27,6 +27,10 @@
             vscode-langservers-extracted
             # Lua 
             lua-language-server
+            # Dart 
+            dart
+            # Nushell
+            nushellFull
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
