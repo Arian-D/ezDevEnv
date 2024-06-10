@@ -17,6 +17,8 @@
             gopls
             # Nix 
             nil
+            # PHP 
+            phpactor
             # Rust 
             rust-analyzer
             # Terraform HCL 
