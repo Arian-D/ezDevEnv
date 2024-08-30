@@ -35,6 +35,8 @@
             nushellFull
             # Elixir 
             elixir-ls
+            # Zig z
+            zls
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
