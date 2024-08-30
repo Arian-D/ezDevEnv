@@ -33,6 +33,8 @@
             dart
             # Nushell
             nushellFull
+            # Elixir 
+            elixir-ls
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
