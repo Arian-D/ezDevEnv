@@ -13,6 +13,8 @@
             marksman
             # YAML
             yaml-language-server
+            # Python 
+            python312Packages.python-lsp-server
             # Go 
             gopls
             # Nix 
