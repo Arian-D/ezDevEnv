@@ -42,9 +42,10 @@
           ];
           # TODO: Switch to upstream Helix flake
           hx-with-lsps = pkgs.helix.overrideAttrs (final: prev: {
+            nativeBuildInputs = prev.nativeBuildInputs ++ [ pkgs.makeWrapper ];
             postInstall = prev.postInstall + ''
               wrapProgram $out/bin/hx $wrapperfile \
-                --suffix PATH : ${pkgs.lib.makeBinPath lsps}
+                --prefix PATH : ${pkgs.lib.makeBinPath lsps}
             '';
           });
           helix-config = pkgs.writeTextFile {
