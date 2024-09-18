@@ -9,6 +9,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
           lsps = with pkgs; [
+            # Ansible 󱂚
+            ansible-language-server
             # Markdown 
             marksman
             # YAML
