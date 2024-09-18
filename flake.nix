@@ -36,7 +36,7 @@
             # Dart 
             dart
             # Nushell
-            nushellFull
+            nushell
             # Elixir 
             elixir-ls
             # Zig z
